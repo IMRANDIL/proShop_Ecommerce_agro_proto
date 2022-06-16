@@ -4,8 +4,15 @@ require('dotenv').config();
 const express = require('express');
 
 const products = require('./data/data')
-
+const cors = require('cors')
 const app = express();
+
+
+
+//some middleware...
+
+app.use(cors())
+
 
 
 
