@@ -11,10 +11,14 @@ const ProductScreen = () => {
   // const product = products.find((p) => p._id === id);
 
   const fetchSingleProduct = async () => {
-    const { data } = await axios.get(
-      `http://localhost:5000/api/products/${id}`
-    );
-    setProduct(data);
+    try {
+      const { data } = await axios.get(
+        `http://localhost:5000/api/products/${id}`
+      );
+      setProduct(data);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   useEffect(() => {
