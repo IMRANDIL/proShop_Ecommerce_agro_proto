@@ -1,5 +1,8 @@
 import dotenv from 'dotenv';
+import dbConnection from './config/db.js';
 dotenv.config();
+
+dbConnection();
 
 
 
