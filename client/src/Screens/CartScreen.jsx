@@ -22,13 +22,13 @@ const CartScreen = () => {
   const [searchParams] = useSearchParams();
   const navigation = useNavigate();
   const { id } = useParams();
-  const qty = searchParams.get("qty");
+  const qty = Number(searchParams.get("qty"));
   const dispatch = useDispatch();
   const { cartItems } = useSelector((state) => state.cart);
 
   useEffect(() => {
     dispatch(addToCart(id, qty));
-  });
+  }, [dispatch, id, qty]);
 
   return <div>CartScreen</div>;
 };
