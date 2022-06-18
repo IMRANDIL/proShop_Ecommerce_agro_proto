@@ -6,9 +6,6 @@ export const generateToken = (id) => {
       id,
     },
     process.env.JWT_SECRET,
-    { expiresIn: "1d" },
-    (err) => {
-      console.log(err);
-    }
+    { expiresIn: "1d" }
   );
 };
