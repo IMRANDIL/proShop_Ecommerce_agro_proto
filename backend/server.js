@@ -10,6 +10,7 @@ import express from "express";
 
 import cors from "cors";
 import productRouter from "./router/productRoute.js";
+import userRouter from "./router/userRoute.js";
 const app = express();
 
 //some middleware...
@@ -17,6 +18,7 @@ const app = express();
 app.use(cors());
 
 app.use("/api/products", productRouter);
+app.use("/api/users", userRouter);
 
 app.get("/", (req, res) => {
   res.send("API is ready");
