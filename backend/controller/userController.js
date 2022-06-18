@@ -19,3 +19,13 @@ export const authenticateUser = asyncHandler(async (req, res) => {
     throw new Error("Invalid Credentials");
   }
 });
+
+// @desc Get User profile
+// @route Get /api/users/profile
+// @access private
+
+export const getUserProfile = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.user._id);
+
+  res.send(user);
+});
