@@ -25,7 +25,17 @@ export const authenticateUser = asyncHandler(async (req, res) => {
 // @access private
 
 export const getUserProfile = asyncHandler(async (req, res) => {
-  //   const user = await User.findById(req.user._id);
+  const user = await User.findById(req.user._id);
 
-  res.send("success");
+  if (!user) {
+    res.status(404);
+    throw new Error("User Not Found");
+  }
+
+  res.json({
+    _id: user._id,
+    name: user.name,
+    email: user.email,
+    isAdmin: user.isAdmin,
+  });
 });
