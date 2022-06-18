@@ -21,5 +21,14 @@ export const addToCart = (id, qty) => async (dispatch, getState) => {
       "cartItems",
       JSON.stringify(getState().cart.cartItems)
     );
-  } catch (error) {}
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const removeFromCart = (id) => (dispatch) => {
+  dispatch({
+    type: CART_REMOVE_ITEM,
+    payload: id,
+  });
 };
