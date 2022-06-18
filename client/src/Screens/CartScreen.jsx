@@ -32,6 +32,8 @@ const CartScreen = () => {
     }
   }, [dispatch, id, qty]);
 
+  const removeFromCartHandler = (id) => {};
+
   return (
     <Row>
       <Col md={8}>
@@ -68,6 +70,15 @@ const CartScreen = () => {
                         </option>
                       ))}
                     </Form.Control>
+                  </Col>
+                  <Col md={2}>
+                    <Button
+                      type="button"
+                      variant="light"
+                      onClick={() => removeFromCartHandler(item.product)}
+                    >
+                      <i className="fas fa-trash"></i>
+                    </Button>
                   </Col>
                 </Row>
               </ListGroup.Item>
