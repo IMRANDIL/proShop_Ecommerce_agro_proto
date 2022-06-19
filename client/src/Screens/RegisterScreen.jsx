@@ -7,9 +7,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { Form, Button, Row, Col } from "react-bootstrap";
 import FormContainer from "../components/FormContainer";
 
-const LoginScreen = () => {
+const RegisterScreen = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [name, setName] = useState("");
   const [searchParams] = useSearchParams();
   const navigation = useNavigate();
   const dispatch = useDispatch();
@@ -30,9 +32,20 @@ const LoginScreen = () => {
 
   return (
     <FormContainer>
-      <h1>Sign In</h1>
+      <h1>Sign Up</h1>
       {error && <Message variant="danger">{error}</Message>}
       {loading && <Loader />}
+
+      <Form.Group controlId="name">
+        <Form.Label>Name</Form.Label>
+        <Form.Control
+          type="text"
+          placeholder="Enter Name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
+      </Form.Group>
+
       <Form onSubmit={submitHandler}>
         <Form.Group controlId="email">
           <Form.Label>Email Address</Form.Label>
@@ -54,21 +67,31 @@ const LoginScreen = () => {
           />
         </Form.Group>
 
+        <Form.Group controlId="confirmPassword">
+          <Form.Label>Confirm Password</Form.Label>
+          <Form.Control
+            type="password"
+            placeholder="Confirm Password"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+          />
+        </Form.Group>
+
         <Button
           type="submit"
           variant="primary"
           style={{ borderRadius: "5px" }}
           className="my-3"
         >
-          Sign In
+          Sign Up
         </Button>
       </Form>
 
       <Row className="py-3">
         <Col>
-          New Customer?{" "}
-          <Link to={redirect ? `/register?redirect=${redirect}` : "/"}>
-            Register
+          Have an Account?{" "}
+          <Link to={redirect ? `/login?redirect=${redirect}` : "/"}>
+            Sign In
           </Link>
         </Col>
       </Row>
@@ -76,4 +99,4 @@ const LoginScreen = () => {
   );
 };
 
-export default LoginScreen;
+export default RegisterScreen;
