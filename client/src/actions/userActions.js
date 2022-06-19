@@ -109,6 +109,7 @@ export const userDetails = (id) => async (dispatch, getState) => {
       `http://localhost:5000/api/users/${id}`,
       config
     );
+
     dispatch({
       type: USER_DETAILS_SUCCESS,
       payload: data,

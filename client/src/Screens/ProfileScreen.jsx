@@ -15,9 +15,9 @@ const ProfileScreen = () => {
 
   const navigation = useNavigate();
   const dispatch = useDispatch();
-  const { userInfo } = useSelector((state) => state.userRegister);
 
   const { loading, error, user } = useSelector((state) => state.userDetails);
+  const { userInfo } = useSelector((state) => state.userLogin);
 
   useEffect(() => {
     if (!userInfo) {
@@ -44,8 +44,8 @@ const ProfileScreen = () => {
 
   return (
     <Row>
-      <Col>
-        <h1>Sign Up</h1>
+      <Col md={3}>
+        <h3>Update Profile</h3>
         {message && <Message variant="danger">{message}</Message>}
         {error && <Message variant="danger">{error}</Message>}
         {loading && <Loader />}
@@ -97,12 +97,12 @@ const ProfileScreen = () => {
             style={{ borderRadius: "5px" }}
             className="my-3"
           >
-            Register
+            Update
           </Button>
         </Form>
       </Col>
-      <Col>
-        <h2>shopping items</h2>
+      <Col md={9}>
+        <h3>order items</h3>
       </Col>
     </Row>
   );
