@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { userDetails } from "../actions/userActions";
+import { userDetails, userUpdate } from "../actions/userActions";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
 import { useDispatch, useSelector } from "react-redux";
@@ -18,6 +18,7 @@ const ProfileScreen = () => {
 
   const { loading, error, user } = useSelector((state) => state.userDetails);
   const { userInfo } = useSelector((state) => state.userLogin);
+  const { success } = useSelector((state) => state.userUpdate);
 
   useEffect(() => {
     if (!userInfo) {
@@ -38,6 +39,7 @@ const ProfileScreen = () => {
       setMessage("Password did not match!");
     } else {
       //update profile one here..
+      dispatch(userUpdate({ id: user._id, name, email, password }));
       setMessage(null);
     }
   };
@@ -48,6 +50,7 @@ const ProfileScreen = () => {
         <h3>Update Profile</h3>
         {message && <Message variant="danger">{message}</Message>}
         {error && <Message variant="danger">{error}</Message>}
+        {success && <Message variant="success">Profile Updated</Message>}
         {loading && <Loader />}
 
         <Form onSubmit={submitHandler}>
