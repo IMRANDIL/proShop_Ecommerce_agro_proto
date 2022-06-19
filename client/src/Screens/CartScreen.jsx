@@ -25,7 +25,7 @@ const CartScreen = () => {
   const qty = Number(searchParams.get("qty"));
   const dispatch = useDispatch();
   const { cartItems } = useSelector((state) => state.cart);
-  console.log(cartItems);
+
   useEffect(() => {
     if (id) {
       dispatch(addToCart(id, qty));
