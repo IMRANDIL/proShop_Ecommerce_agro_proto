@@ -5,6 +5,7 @@ import Message from "../components/Message";
 import Loader from "../components/Loader";
 import { useDispatch, useSelector } from "react-redux";
 import { Form, Button, Row, Col } from "react-bootstrap";
+import { USER_UPDATE_PROFILE_RESET } from "../constants/userConstants";
 
 const ProfileScreen = () => {
   const [email, setEmail] = useState("");
@@ -24,14 +25,15 @@ const ProfileScreen = () => {
     if (!userInfo) {
       navigation("/login");
     } else {
-      if (!user.name) {
+      if (!user || !user.name || success) {
+        dispatch({ type: USER_UPDATE_PROFILE_RESET });
         dispatch(userDetails("profile"));
       } else {
         setName(user.name);
         setEmail(user.email);
       }
     }
-  }, [dispatch, navigation, user, userInfo]);
+  }, [dispatch, navigation, user, userInfo, success]);
 
   const submitHandler = (e) => {
     e.preventDefault();
