@@ -6,6 +6,7 @@ import Loader from "../components/Loader";
 import { useDispatch, useSelector } from "react-redux";
 import { Form, Button, Row, Col } from "react-bootstrap";
 import FormContainer from "../components/FormContainer";
+import { USER_LOGIN_RESET } from "../constants/userConstants";
 
 const LoginScreen = () => {
   const [email, setEmail] = useState("");
@@ -23,6 +24,11 @@ const LoginScreen = () => {
       navigation(redirect);
     }
   }, [redirect, navigation, userInfo]);
+
+  const handleReset = () => {
+    dispatch({ type: USER_LOGIN_RESET });
+  };
+
   const submitHandler = (e) => {
     e.preventDefault();
     dispatch(userLogin(email, password));
@@ -67,7 +73,10 @@ const LoginScreen = () => {
       <Row className="py-3">
         <Col>
           New Customer?{" "}
-          <Link to={redirect ? `/register?redirect=${redirect}` : "/register"}>
+          <Link
+            to={redirect ? `/register?redirect=${redirect}` : "/register"}
+            onClick={handleReset}
+          >
             Register
           </Link>
         </Col>

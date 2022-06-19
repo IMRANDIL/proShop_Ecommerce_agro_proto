@@ -4,11 +4,15 @@ import { useNavigate } from "react-router-dom";
 import { LinkContainer } from "react-router-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { userLogout } from "../actions/userActions";
+import { USER_LOGIN_RESET } from "../constants/userConstants";
 
 const Header = () => {
   const dispatch = useDispatch();
   const navigation = useNavigate();
   const { userInfo } = useSelector((state) => state.userLogin);
+  const handleReset = () => {
+    dispatch({ type: USER_LOGIN_RESET });
+  };
   const logoutHandler = () => {
     dispatch(userLogout());
     navigation("/login");
@@ -40,7 +44,7 @@ const Header = () => {
                 </NavDropdown>
               ) : (
                 <LinkContainer to="/login">
-                  <Nav.Link>
+                  <Nav.Link onClick={handleReset}>
                     <i className="fas fa-user"></i>
                     Sign In
                   </Nav.Link>
