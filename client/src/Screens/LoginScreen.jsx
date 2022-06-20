@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Form, Button, Row, Col } from "react-bootstrap";
 import FormContainer from "../components/FormContainer";
 import { USER_LOGIN_RESET } from "../constants/userConstants";
+import { USER_REGISTER_RESET } from "../constants/userConstants";
 
 const LoginScreen = () => {
   const [email, setEmail] = useState("");
@@ -17,16 +18,17 @@ const LoginScreen = () => {
   const { loading, error, userInfo } = useSelector((state) => state.userLogin);
   const redirect = searchParams.get("redirect")
     ? searchParams.get("redirect")
-    : "/";
+    : "";
 
   useEffect(() => {
     if (userInfo) {
-      navigation(redirect);
+      navigation(`/${redirect}`);
     }
   }, [redirect, navigation, userInfo]);
 
   const handleReset = () => {
     dispatch({ type: USER_LOGIN_RESET });
+    dispatch({ type: USER_REGISTER_RESET });
   };
 
   const submitHandler = (e) => {
