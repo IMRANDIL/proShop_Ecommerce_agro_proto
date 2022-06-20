@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Row, Col, ListGroup, Image, Card } from "react-bootstrap";
@@ -9,12 +9,14 @@ import { Link } from "react-router-dom";
 
 const PlaceOrderScreen = () => {
   const dispatch = useDispatch();
-
+  const navigation = useNavigate();
   const { shippingAddress, paymentMethod, cartItems } = useSelector(
     (state) => state.cart
   );
 
   const cart = useSelector((state) => state.cart);
+
+  const { error, success, order } = useSelector((state) => state.orderCreate);
 
   const addDecimals = (num) => {
     return (Math.round(num * 100) / 100).toFixed(2);
@@ -48,6 +50,12 @@ const PlaceOrderScreen = () => {
       })
     );
   };
+
+  useEffect(() => {
+    if (success) {
+      navigation(`/order/${order._id}`);
+    }
+  }, [order, success, navigation]);
 
   return (
     <>
