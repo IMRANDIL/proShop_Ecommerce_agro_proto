@@ -16,8 +16,6 @@ const PlaceOrderScreen = () => {
 
   const cart = useSelector((state) => state.cart);
 
-  const { error, success, order } = useSelector((state) => state.orderCreate);
-
   const addDecimals = (num) => {
     return (Math.round(num * 100) / 100).toFixed(2);
   };
@@ -37,6 +35,13 @@ const PlaceOrderScreen = () => {
     Number(cart.taxPrice)
   ).toFixed(2);
 
+  const { error, success, order } = useSelector((state) => state.orderCreate);
+  useEffect(() => {
+    if (success) {
+      navigation(`/order/${order._id}`);
+    }
+  }, [order, success, navigation]);
+
   const handlePlaceOrder = () => {
     dispatch(
       orderCreate({
@@ -50,12 +55,6 @@ const PlaceOrderScreen = () => {
       })
     );
   };
-
-  useEffect(() => {
-    if (success) {
-      navigation(`/order/${order._id}`);
-    }
-  }, [order, success, navigation]);
 
   return (
     <>
