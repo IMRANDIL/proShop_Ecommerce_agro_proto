@@ -4,9 +4,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { Button, Row, Col, ListGroup, Image, Card } from "react-bootstrap";
 import Message from "../components/Message";
 import CheckoutSteps from "../components/CheckoutSteps";
+import { orderCreate } from "../actions/orderActions";
 import { Link } from "react-router-dom";
 
 const PlaceOrderScreen = () => {
+  const dispatch = useDispatch();
+
   const { shippingAddress, paymentMethod, cartItems } = useSelector(
     (state) => state.cart
   );
@@ -32,7 +35,19 @@ const PlaceOrderScreen = () => {
     Number(cart.taxPrice)
   ).toFixed(2);
 
-  const handlePlaceOrder = () => {};
+  const handlePlaceOrder = () => {
+    dispatch(
+      orderCreate({
+        orderItems: cartItems,
+        shippingAddress: shippingAddress,
+        paymentMethod: paymentMethod,
+        itemsPrice: cart.itemsPrice,
+        shippingPrice: cart.shippingPrice,
+        taxPrice: cart.taxPrice,
+        totalPrice: cart.totalPrice,
+      })
+    );
+  };
 
   return (
     <>
