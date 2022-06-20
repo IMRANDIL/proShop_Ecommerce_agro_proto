@@ -11,6 +11,7 @@ import express from "express";
 import cors from "cors";
 import productRouter from "./router/productRoute.js";
 import userRouter from "./router/userRoute.js";
+import orderRouter from "./router/orderRoute.js";
 const app = express();
 
 //some middleware...
@@ -20,6 +21,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use("/api/products", productRouter);
 app.use("/api/users", userRouter);
+app.use("/api/orders", orderRouter);
 
 app.get("/", (req, res) => {
   res.send("API is ready");
