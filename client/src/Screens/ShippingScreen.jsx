@@ -9,10 +9,10 @@ import CheckoutSteps from "../components/CheckoutSteps";
 const ShippingScreen = () => {
   const { shippingAddress } = useSelector((state) => state.cart);
 
-  const [address, setAddress] = useState("");
-  const [city, setCity] = useState("");
-  const [postalCode, setPostalCode] = useState("");
-  const [country, setCountry] = useState("");
+  const [address, setAddress] = useState(shippingAddress.address);
+  const [city, setCity] = useState(shippingAddress.city);
+  const [postalCode, setPostalCode] = useState(shippingAddress.postalCode);
+  const [country, setCountry] = useState(shippingAddress.country);
 
   const navigation = useNavigate();
 
@@ -36,7 +36,7 @@ const ShippingScreen = () => {
             type="text"
             placeholder="Enter Address"
             required
-            value={shippingAddress.address}
+            value={address}
             onChange={(e) => setAddress(e.target.value)}
           />
         </Form.Group>
@@ -47,7 +47,7 @@ const ShippingScreen = () => {
             type="text"
             placeholder="Enter City"
             required
-            value={shippingAddress.city}
+            value={city}
             onChange={(e) => setCity(e.target.value)}
           />
         </Form.Group>
@@ -58,7 +58,7 @@ const ShippingScreen = () => {
             type="number"
             placeholder="Enter PostalCode"
             required
-            value={shippingAddress.postalCode}
+            value={postalCode}
             onChange={(e) => setPostalCode(e.target.value)}
           />
         </Form.Group>
@@ -69,7 +69,7 @@ const ShippingScreen = () => {
             type="text"
             placeholder="Enter Country"
             required
-            value={shippingAddress.country}
+            value={country}
             onChange={(e) => setCountry(e.target.value)}
           />
         </Form.Group>
