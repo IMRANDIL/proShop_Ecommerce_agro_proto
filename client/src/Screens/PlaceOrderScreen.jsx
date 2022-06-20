@@ -36,6 +36,7 @@ const PlaceOrderScreen = () => {
   ).toFixed(2);
 
   const { error, success, order } = useSelector((state) => state.orderCreate);
+
   useEffect(() => {
     if (success) {
       navigation(`/order/${order._id}`);
