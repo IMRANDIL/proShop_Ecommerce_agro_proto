@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
+import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { Row, Col, ListGroup, Image, Card } from "react-bootstrap";
 import Message from "../components/Message";
@@ -27,6 +28,13 @@ const OrderScreen = () => {
   }
 
   useEffect(() => {
+    const addPaypalScript = async () => {
+      const { data: clientId } = await axios.get(
+        "http://localhost:5000/api/config/paypal"
+      );
+      console.log(clientId);
+    };
+    addPaypalScript();
     if (!order || order._id !== id) {
       dispatch(orderDetailsById(id));
     }
