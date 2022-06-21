@@ -5,8 +5,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { Row, Col, ListGroup, Image, Card } from "react-bootstrap";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
-import { orderDetailsById } from "../actions/orderActions";
+import { orderDetailsById, orderPayById } from "../actions/orderActions";
 import { Link } from "react-router-dom";
+import { PayPalButton } from "react-paypal-button-v2";
+import { ORDER_PAY_RESET } from "../constants/orderConstants";
 
 const OrderScreen = () => {
   const [sdkReady, setSdkReady] = useState(false);
@@ -48,6 +50,7 @@ const OrderScreen = () => {
     };
 
     if (!order || order._id !== id || successPay) {
+      dispatch({ type: ORDER_PAY_RESET });
       dispatch(orderDetailsById(id));
     } else if (!order.isPaid) {
       if (!window.paypal) {
@@ -57,6 +60,11 @@ const OrderScreen = () => {
       }
     }
   }, [id, dispatch, order, successPay]);
+
+  const successPaymentHandler = (paymentResult) => {
+    console.log(paymentResult);
+    dispatch(orderPayById(order._id, paymentResult));
+  };
 
   return loading ? (
     <Loader />
@@ -104,7 +112,7 @@ const OrderScreen = () => {
                 {order.paymentMethod}
               </p>
               {order.isPaid ? (
-                <Message variant="success">Paid on ${order.paidAt}</Message>
+                <Message variant="success">Paid on {order.paidAt}</Message>
               ) : (
                 <Message variant="danger">Not Paid</Message>
               )}
@@ -178,6 +186,19 @@ const OrderScreen = () => {
                   <Col>${order.totalPrice}</Col>
                 </Row>
               </ListGroup.Item>
+              {!order.isPaid && (
+                <ListGroup.Item>
+                  {loadingPay && <Loader />}
+                  {!sdkReady ? (
+                    <Loader />
+                  ) : (
+                    <PayPalButton
+                      amount={order.totalPrice}
+                      onSuccess={successPaymentHandler}
+                    />
+                  )}
+                </ListGroup.Item>
+              )}
             </ListGroup>
           </Card>
         </Col>
