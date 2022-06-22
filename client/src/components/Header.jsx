@@ -4,7 +4,9 @@ import { useNavigate } from "react-router-dom";
 import { LinkContainer } from "react-router-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { userLogout, userDetails } from "../actions/userActions";
+import { orderMyList } from "../actions/orderActions";
 import { USER_LOGIN_RESET } from "../constants/userConstants";
+import { ORDER_LIST_MY_RESET } from "../constants/orderConstants";
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -13,6 +15,7 @@ const Header = () => {
 
   const handleUserDetails = () => {
     dispatch(userDetails("profile"));
+    dispatch(orderMyList());
   };
 
   const handleReset = () => {
@@ -20,6 +23,7 @@ const Header = () => {
   };
   const logoutHandler = () => {
     dispatch(userLogout());
+    dispatch({ type: ORDER_LIST_MY_RESET });
     navigation("/login");
   };
   return (

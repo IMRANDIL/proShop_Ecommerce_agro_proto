@@ -8,7 +8,6 @@ import Loader from "../components/Loader";
 import { useDispatch, useSelector } from "react-redux";
 import { Form, Button, Row, Col, Table } from "react-bootstrap";
 import { USER_UPDATE_PROFILE_RESET } from "../constants/userConstants";
-import { ORDER_LIST_MY_RESET } from "../constants/orderConstants";
 
 const ProfileScreen = () => {
   const [email, setEmail] = useState("");
@@ -33,7 +32,6 @@ const ProfileScreen = () => {
     } else {
       if (!user || !user.name || success) {
         dispatch({ type: USER_UPDATE_PROFILE_RESET });
-        dispatch({ type: ORDER_LIST_MY_RESET });
         dispatch(userDetails("profile"));
         dispatch(orderMyList());
       } else {
