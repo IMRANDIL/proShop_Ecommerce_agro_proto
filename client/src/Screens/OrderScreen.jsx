@@ -9,6 +9,8 @@ import { orderDetailsById, orderPayById } from "../actions/orderActions";
 import { Link } from "react-router-dom";
 import { PayPalButton } from "react-paypal-button-v2";
 import { ORDER_PAY_RESET } from "../constants/orderConstants";
+import { CART_RESET_REQUEST } from "../constants/cartContants";
+import { ORDER_DETAILS_RESET } from "../constants/orderConstants";
 
 const OrderScreen = () => {
   const [sdkReady, setSdkReady] = useState(false);
@@ -49,8 +51,14 @@ const OrderScreen = () => {
       document.body.appendChild(script);
     };
 
+    if (successPay) {
+      dispatch({ type: CART_RESET_REQUEST });
+      dispatch({ type: ORDER_DETAILS_RESET });
+    }
+
     if (!order || order._id !== id || successPay) {
       dispatch({ type: ORDER_PAY_RESET });
+
       dispatch(orderDetailsById(id));
     } else if (!order.isPaid) {
       if (!window.paypal) {
@@ -63,6 +71,7 @@ const OrderScreen = () => {
 
   const successPaymentHandler = (paymentResult) => {
     console.log(paymentResult);
+
     dispatch(orderPayById(order._id, paymentResult));
   };
 
