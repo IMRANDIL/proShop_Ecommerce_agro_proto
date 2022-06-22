@@ -117,3 +117,13 @@ export const updateUserProfile = asyncHandler(async (req, res) => {
     token: generateToken(updatedUser._id),
   });
 });
+
+// @desc get All users
+// @route put /api/users
+// @access private/admin
+
+export const getAllUsers = asyncHandler(async (req, res) => {
+  const users = await User.find({});
+
+  res.json(users);
+});
