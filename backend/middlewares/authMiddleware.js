@@ -27,3 +27,12 @@ export const protectRoute = expressAsyncHandler(async (req, res, next) => {
     throw new Error("Authorization failed,No Token");
   }
 });
+
+export const authorizationProtect = (req, res, next) => {
+  if (req.user && req.user.isAdmin) {
+    next();
+  } else {
+    res.status(401);
+    throw new Error("Not Authorized as an Admin");
+  }
+};
