@@ -22,16 +22,16 @@ router
   .get(protectRoute, authorizationProtect, getAllUsers);
 
 router
-  .route("/:id")
-  .delete(protectRoute, authorizationProtect, deleteUser)
-  .get(protectRoute, authorizationProtect, getUserById)
-  .put(protectRoute, authorizationProtect, updateUserById);
-
-router
   .route("/profile")
   .get(protectRoute, getUserProfile)
   .put(protectRoute, updateUserProfile);
 
 router.post("/login", authenticateUser);
+
+router
+  .route("/:id")
+  .delete(protectRoute, authorizationProtect, deleteUser)
+  .get(protectRoute, authorizationProtect, getUserById)
+  .put(protectRoute, authorizationProtect, updateUserById);
 
 export default router;
