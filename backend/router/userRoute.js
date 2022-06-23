@@ -3,8 +3,10 @@ import {
   authenticateUser,
   deleteUser,
   getAllUsers,
+  getUserById,
   getUserProfile,
   registerUser,
+  updateUserById,
   updateUserProfile,
 } from "../controller/userController.js";
 import {
@@ -19,7 +21,11 @@ router
   .post(registerUser)
   .get(protectRoute, authorizationProtect, getAllUsers);
 
-router.route("/:id").delete(protectRoute, authorizationProtect, deleteUser);
+router
+  .route("/:id")
+  .delete(protectRoute, authorizationProtect, deleteUser)
+  .get(protectRoute, authorizationProtect, getUserById)
+  .put(protectRoute, authorizationProtect, updateUserById);
 
 router
   .route("/profile")
