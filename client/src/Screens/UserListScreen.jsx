@@ -19,7 +19,7 @@ const UserListScreen = () => {
     } else {
       navigation("/login");
     }
-  }, [dispatch, userInfo]);
+  }, [dispatch, userInfo, navigation]);
 
   const deleteUserHandler = (id) => {};
 
