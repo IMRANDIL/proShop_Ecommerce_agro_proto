@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { LinkContainer } from "react-router-bootstrap";
+import { useNavigate } from "react-router-dom";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
 import { useDispatch, useSelector } from "react-redux";
@@ -8,12 +9,19 @@ import { userList } from "../actions/userActions";
 
 const UserListScreen = () => {
   const dispatch = useDispatch();
-
+  const navigation = useNavigate();
   const { loading, error, users } = useSelector((state) => state.userList);
+  const { userInfo } = useSelector((state) => state.userLogin);
 
   useEffect(() => {
-    dispatch(userList());
-  }, [dispatch]);
+    if (userInfo && userInfo.isAdmin) {
+      dispatch(userList());
+    } else {
+      navigation("/login");
+    }
+  }, [dispatch, userInfo]);
+
+  const deleteUserHandler = (id) => {};
 
   return (
     <>
@@ -48,6 +56,21 @@ const UserListScreen = () => {
                   ) : (
                     <i className="fas fa-times" style={{ color: "red" }} />
                   )}
+                </td>
+
+                <td>
+                  <LinkContainer to={`/user/${user._id}/edit`}>
+                    <Button variant="light" className="btn-sm">
+                      <i className="fas fa-edit" />
+                    </Button>
+                  </LinkContainer>
+                  <Button
+                    variant="danger"
+                    className="btn-sm"
+                    onClick={() => deleteUserHandler(user._id)}
+                  >
+                    <i className="fas fa-trash" />
+                  </Button>
                 </td>
               </tr>
             ))}
