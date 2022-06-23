@@ -1,8 +1,10 @@
 import express from "express";
 import {
+  createProduct,
   deleteProductById,
   getAllProducts,
   getProductById,
+  updateProductById,
 } from "../controller/productController.js";
 import {
   protectRoute,
@@ -10,11 +12,15 @@ import {
 } from "../middlewares/authMiddleware.js";
 const router = express.Router();
 
-router.route("/").get(getAllProducts);
+router
+  .route("/")
+  .get(getAllProducts)
+  .post(protectRoute, authorizationProtect, createProduct);
 
 router
   .route("/:id")
   .get(getProductById)
-  .delete(protectRoute, authorizationProtect, deleteProductById);
+  .delete(protectRoute, authorizationProtect, deleteProductById)
+  .put(protectRoute, authorizationProtect, updateProductById);
 
 export default router;
