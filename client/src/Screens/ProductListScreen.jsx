@@ -24,15 +24,31 @@ const ProductListScreen = () => {
     }
   }, [dispatch, userInfo, navigation]);
 
-  const deleteUserHandler = (id) => {
+  const deleteProductHandler = (id) => {
     if (window.confirm("Are you sure?")) {
       //delete product action..
     }
   };
 
+  const createProductHandler = () => {};
+
   return (
     <>
-      <h1>Users</h1>
+      <Row className="align-items-center">
+        <Col>
+          <h1>Products</h1>
+        </Col>
+        <Col className="text-center">
+          <Button
+            className="my-3"
+            onClick={createProductHandler}
+            style={{ borderRadius: "5px" }}
+          >
+            <i className="fas fa-plus" /> Create Product
+          </Button>
+        </Col>
+      </Row>
+
       {loading ? (
         <Loader />
       ) : error ? (
@@ -43,30 +59,25 @@ const ProductListScreen = () => {
             <tr>
               <th>ID</th>
               <th>NAME</th>
-              <th>EMAIL</th>
-              <th>ADMIN</th>
+              <th>PRICE</th>
+              <th>CATEGORY</th>
+              <th>BRAND</th>
               <th></th>
             </tr>
           </thead>
 
           <tbody>
-            {users.map((user) => (
-              <tr key={user._id}>
-                <td>{user._id}</td>
-                <td>{user.name}</td>
-                <td>
-                  <a href={`mailto:${user.email}`}>{user.email}</a>
-                </td>
-                <td>
-                  {user.isAdmin ? (
-                    <i className="fas fa-check" style={{ color: "green" }} />
-                  ) : (
-                    <i className="fas fa-times" style={{ color: "red" }} />
-                  )}
-                </td>
+            {products.map((product) => (
+              <tr key={product._id}>
+                <td>{product._id}</td>
+                <td>{product.name}</td>
+                <td>${product.price}</td>
+                <td>{product.category}</td>
+
+                <td>{product.brand}</td>
 
                 <td>
-                  <LinkContainer to={`/admin/users/${user._id}/edit`}>
+                  <LinkContainer to={`/admin/product/${product._id}/edit`}>
                     <Button variant="light" className="btn-sm">
                       <i className="fas fa-edit" />
                     </Button>
@@ -75,7 +86,7 @@ const ProductListScreen = () => {
                     variant="danger"
                     className="btn-sm"
                     // disabled={user.isAdmin}
-                    onClick={() => deleteUserHandler(user._id)}
+                    onClick={() => deleteProductHandler(product._id)}
                   >
                     <i className="fas fa-trash" />
                   </Button>
