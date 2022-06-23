@@ -20,70 +20,75 @@ const UserEditScreen = () => {
   const dispatch = useDispatch();
   const { loading, error, user } = useSelector((state) => state.userDetails);
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    if (!user.name || user._id !== id) {
+      dispatch(userDetails(id));
+    } else {
+      setEmail(user.email);
+      setName(user.name);
+      setIsAdmin(user.isAdmin);
+    }
+  }, [dispatch, user, id]);
 
   const submitHandler = (e) => {
     e.preventDefault();
   };
 
   return (
-    <FormContainer>
-      <h1>Sign Up</h1>
+    <>
+      <Link to="/admin/userlist" className="btn btn-light my-3">
+        Go Back
+      </Link>
 
-      {error && <Message variant="danger">{error}</Message>}
-      {loading && <Loader />}
+      <FormContainer>
+        <h1>Edit User</h1>
+        {loading ? (
+          <Loader />
+        ) : error ? (
+          <Message variant="danger">{error}</Message>
+        ) : (
+          <Form onSubmit={submitHandler}>
+            <Form.Group controlId="name">
+              <Form.Label>Name</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Enter Name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+              />
+            </Form.Group>
 
-      <Form onSubmit={submitHandler}>
-        <Form.Group controlId="name">
-          <Form.Label>Name</Form.Label>
-          <Form.Control
-            type="text"
-            placeholder="Enter Name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-        </Form.Group>
+            <Form.Group controlId="email">
+              <Form.Label>Email Address</Form.Label>
+              <Form.Control
+                type="email"
+                placeholder="Enter Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </Form.Group>
 
-        <Form.Group controlId="email">
-          <Form.Label>Email Address</Form.Label>
-          <Form.Control
-            type="email"
-            placeholder="Enter Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </Form.Group>
+            <Form.Group controlId="isadmin" style={{ margin: "17px" }}>
+              <Form.Check
+                type="checkbox"
+                label="Is Admin"
+                checked={isAdmin}
+                onChange={(e) => setIsAdmin(e.target.checked)}
+              />
+            </Form.Group>
 
-        <Form.Group controlId="password">
-          <Form.Label>Password</Form.Label>
-          <Form.Control
-            type="password"
-            placeholder="Enter Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </Form.Group>
-
-        <Form.Group controlId="confirmPassword">
-          <Form.Label>Confirm Password</Form.Label>
-          <Form.Control
-            type="password"
-            placeholder="Confirm Password"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-          />
-        </Form.Group>
-
-        <Button
-          type="submit"
-          variant="primary"
-          style={{ borderRadius: "5px" }}
-          className="my-3"
-        >
-          Update
-        </Button>
-      </Form>
-    </FormContainer>
+            <Button
+              type="submit"
+              variant="primary"
+              style={{ borderRadius: "5px" }}
+              className="my-3"
+            >
+              Update
+            </Button>
+          </Form>
+        )}
+      </FormContainer>
+    </>
   );
 };
 
