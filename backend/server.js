@@ -1,4 +1,5 @@
 import dotenv from "dotenv";
+import path from "path";
 import dbConnection from "./config/db.js";
 import colors from "colors";
 import { customError, error404 } from "./middlewares/customError.js";
@@ -12,6 +13,7 @@ import cors from "cors";
 import productRouter from "./router/productRoute.js";
 import userRouter from "./router/userRoute.js";
 import orderRouter from "./router/orderRoute.js";
+import uploadRouter from "./router/uploadsRoute.js";
 const app = express();
 
 //some middleware...
@@ -22,6 +24,12 @@ app.use(express.urlencoded({ extended: false }));
 app.use("/api/products", productRouter);
 app.use("/api/users", userRouter);
 app.use("/api/orders", orderRouter);
+app.use("/api/orders", orderRouter);
+app.use("/api/upload", uploadRouter);
+
+const __dirname = path.resolve();
+
+app.use("/uploads", express.static(path.join(__dirname, "/uploads")));
 
 app.get("/api/config/paypal", (req, res) => {
   res.send(process.env.PAYPAL_CLIENT_ID);
