@@ -36,31 +36,20 @@ const ProductEditScreen = () => {
       setCountInStock(product.countInStock);
       setImage(product.image);
     }
-  }, [dispatch, user, id, navigation, updateSuccess]);
+  }, [dispatch, product, id, navigation]);
 
   const submitHandler = (e) => {
     e.preventDefault();
-    dispatch(
-      userUpdateById({
-        _id: id,
-        name,
-        email,
-        isAdmin,
-      })
-    );
   };
 
   return (
     <>
-      <Link to="/admin/userlist" className="btn btn-light my-3">
+      <Link to="/admin/productlist" className="btn btn-light my-3">
         Go Back
       </Link>
 
       <FormContainer>
-        <h1>Edit User</h1>
-
-        {loadingUpdate && <Loader />}
-        {updateError && <Message variant="danger">{updateError}</Message>}
+        <h1>Edit Product</h1>
 
         {loading ? (
           <Loader />
@@ -78,22 +67,63 @@ const ProductEditScreen = () => {
               />
             </Form.Group>
 
-            <Form.Group controlId="email">
-              <Form.Label>Email Address</Form.Label>
+            <Form.Group controlId="price">
+              <Form.Label>Price</Form.Label>
               <Form.Control
-                type="email"
-                placeholder="Enter Email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                type="number"
+                placeholder="Enter Price"
+                value={price}
+                onChange={(e) => setPrice(e.target.value)}
               />
             </Form.Group>
 
-            <Form.Group controlId="isadmin" style={{ margin: "17px" }}>
-              <Form.Check
-                type="checkbox"
-                label="Is Admin"
-                checked={isAdmin}
-                onChange={(e) => setIsAdmin(e.target.checked)}
+            <Form.Group controlId="image">
+              <Form.Label>Image</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Enter Image Url"
+                value={image}
+                onChange={(e) => setImage(e.target.value)}
+              />
+            </Form.Group>
+
+            <Form.Group controlId="brand">
+              <Form.Label>Brand</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Enter Brand"
+                value={brand}
+                onChange={(e) => setBrand(e.target.value)}
+              />
+            </Form.Group>
+
+            <Form.Group controlId="countInStock">
+              <Form.Label>Count In Stock</Form.Label>
+              <Form.Control
+                type="number"
+                placeholder="Enter Count In Stock"
+                value={countInStock}
+                onChange={(e) => setCountInStock(e.target.value)}
+              />
+            </Form.Group>
+
+            <Form.Group controlId="category">
+              <Form.Label>Category</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Enter Category"
+                value={category}
+                onChange={(e) => setCategory(e.target.value)}
+              />
+            </Form.Group>
+
+            <Form.Group controlId="description">
+              <Form.Label>Description</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Enter Desription"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
               />
             </Form.Group>
 
