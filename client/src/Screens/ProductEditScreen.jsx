@@ -5,7 +5,8 @@ import Loader from "../components/Loader";
 import { useDispatch, useSelector } from "react-redux";
 import { Form, Button } from "react-bootstrap";
 import FormContainer from "../components/FormContainer";
-import { listProductDetails } from "../actions/productActions";
+import { listProductDetails, updateProduct } from "../actions/productActions";
+import { PRODUCT_EDIT_RESET } from "../constants/productConstants";
 
 const ProductEditScreen = () => {
   const { id } = useParams();
@@ -24,22 +25,45 @@ const ProductEditScreen = () => {
     (state) => state.productDetails
   );
 
+  const {
+    error: errorUpdate,
+    loading: loadingUpdate,
+    success: updateSuccess,
+  } = useSelector((state) => state.productUpdate);
+
   useEffect(() => {
-    if (!product.name || product._id !== id) {
-      dispatch(listProductDetails(id));
+    if (updateSuccess) {
+      dispatch({ type: PRODUCT_EDIT_RESET });
+      navigation("/admin/productlist");
     } else {
-      setPrice(product.price);
-      setName(product.name);
-      setDescription(product.description);
-      setBrand(product.brand);
-      setCategory(product.category);
-      setCountInStock(product.countInStock);
-      setImage(product.image);
+      if (!product.name || product._id !== id) {
+        dispatch(listProductDetails(id));
+      } else {
+        setPrice(product.price);
+        setName(product.name);
+        setDescription(product.description);
+        setBrand(product.brand);
+        setCategory(product.category);
+        setCountInStock(product.countInStock);
+        setImage(product.image);
+      }
     }
-  }, [dispatch, product, id, navigation]);
+  }, [dispatch, product, id, navigation, updateSuccess]);
 
   const submitHandler = (e) => {
     e.preventDefault();
+    dispatch(
+      updateProduct({
+        _id: id,
+        name,
+        price,
+        brand,
+        image,
+        description,
+        countInStock,
+        category,
+      })
+    );
   };
 
   return (
@@ -50,6 +74,8 @@ const ProductEditScreen = () => {
 
       <FormContainer>
         <h1>Edit Product</h1>
+        {loadingUpdate && <Loader />}
+        {errorUpdate && <Message variant="danger">{errorUpdate}</Message>}
 
         {loading ? (
           <Loader />
