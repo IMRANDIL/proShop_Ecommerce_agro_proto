@@ -90,3 +90,23 @@ export const getAllOrder = asyncHandler(async (req, res) => {
   const orderItems = await Order.find({}).populate("user", "id,name");
   res.json(orderItems);
 });
+
+//update delivered at.....private/admin....
+// @route...PUT /api/orders/:id/deliver
+
+export const updateToDelivered = asyncHandler(async (req, res) => {
+  const orderItem = await Order.findById(req.params.id);
+
+  if (orderItem) {
+    orderItem.isDelivered = true;
+
+    orderItem.deliveredAt = Date.now();
+
+    const updatedOrder = await orderItem.save();
+
+    res.json(updatedOrder);
+  } else {
+    res.status(404);
+    throw new Error("Order not found!");
+  }
+});

@@ -5,6 +5,7 @@ import {
   getUserOrder,
   orderItemById,
   updateOrderToPaid,
+  updateToDelivered,
 } from "../controller/orderController.js";
 import {
   authorizationProtect,
@@ -19,5 +20,8 @@ router
 router.route("/myorders").get(protectRoute, getUserOrder);
 router.route("/:id").get(protectRoute, orderItemById);
 router.route("/:id/pay").put(protectRoute, updateOrderToPaid);
+router
+  .route("/:id/deliver")
+  .put(protectRoute, authorizationProtect, updateToDelivered);
 
 export default router;
