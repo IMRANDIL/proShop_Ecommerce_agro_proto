@@ -5,12 +5,19 @@ import { useDispatch, useSelector } from "react-redux";
 import { Row, Col, ListGroup, Image, Card } from "react-bootstrap";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
-import { orderDetailsById, orderPayById } from "../actions/orderActions";
+import {
+  orderDetailsById,
+  orderPayById,
+  orderDeliver,
+} from "../actions/orderActions";
 import { Link } from "react-router-dom";
 import { PayPalButton } from "react-paypal-button-v2";
 import { ORDER_PAY_RESET } from "../constants/orderConstants";
 import { CART_RESET_REQUEST } from "../constants/cartContants";
-import { ORDER_DETAILS_RESET } from "../constants/orderConstants";
+import {
+  ORDER_DETAILS_RESET,
+  ORDER_DELIVER_RESET,
+} from "../constants/orderConstants";
 
 const OrderScreen = () => {
   const [sdkReady, setSdkReady] = useState(false);
@@ -20,6 +27,9 @@ const OrderScreen = () => {
   const { id } = useParams();
 
   const { loading, order, error } = useSelector((state) => state.orderDetails);
+  const { loading: loadingDeliver, success: successDeliver } = useSelector(
+    (state) => state.orderDeliver
+  );
   const { success: successPay, loading: loadingPay } = useSelector(
     (state) => state.orderPay
   );
@@ -56,9 +66,9 @@ const OrderScreen = () => {
       dispatch({ type: ORDER_DETAILS_RESET });
     }
 
-    if (!order || order._id !== id || successPay) {
+    if (!order || order._id !== id || successPay || successDeliver) {
       dispatch({ type: ORDER_PAY_RESET });
-
+      dispatch({ type: ORDER_DELIVER_RESET });
       dispatch(orderDetailsById(id));
     } else if (!order.isPaid) {
       if (!window.paypal) {
@@ -67,12 +77,16 @@ const OrderScreen = () => {
         setSdkReady(true);
       }
     }
-  }, [id, dispatch, order, successPay]);
+  }, [id, dispatch, order, successPay, successDeliver]);
 
   const successPaymentHandler = (paymentResult) => {
     console.log(paymentResult);
 
     dispatch(orderPayById(order._id, paymentResult));
+  };
+
+  const deliverHandler = () => {
+    dispatch(orderDeliver(order));
   };
 
   return loading ? (
