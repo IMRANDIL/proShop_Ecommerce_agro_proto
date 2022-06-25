@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import { Row, Col, ListGroup, Image, Card } from "react-bootstrap";
+import { Row, Col, ListGroup, Image, Card, Button } from "react-bootstrap";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
 import {
@@ -21,12 +21,13 @@ import {
 
 const OrderScreen = () => {
   const [sdkReady, setSdkReady] = useState(false);
-
+  const navigation = useNavigate();
   const dispatch = useDispatch();
 
   const { id } = useParams();
 
   const { loading, order, error } = useSelector((state) => state.orderDetails);
+  const { userInfo } = useSelector((state) => state.userLogin);
   const { loading: loadingDeliver, success: successDeliver } = useSelector(
     (state) => state.orderDeliver
   );
@@ -46,6 +47,10 @@ const OrderScreen = () => {
   }
 
   useEffect(() => {
+    if (!userInfo) {
+      navigation("/login");
+    }
+
     const addPaypalScript = async () => {
       const { data: clientId } = await axios.get(
         "http://localhost:5000/api/config/paypal"
@@ -121,7 +126,7 @@ const OrderScreen = () => {
 
               {order.isDelivered ? (
                 <Message variant="success">
-                  Delivered on ${order.deliveredAt}
+                  Delivered on {order.deliveredAt}
                 </Message>
               ) : (
                 <Message variant="danger">Not Delivered</Message>
@@ -222,6 +227,23 @@ const OrderScreen = () => {
                   )}
                 </ListGroup.Item>
               )}
+              {loadingDeliver && <Loader />}
+              {userInfo &&
+                userInfo.isAdmin &&
+                order.isPaid &&
+                !order.isDelivered && (
+                  <ListGroup.Item>
+                    <Row>
+                      <Button
+                        type="button"
+                        className="btn btn-block"
+                        onClick={deliverHandler}
+                      >
+                        Mark as Delivered
+                      </Button>
+                    </Row>
+                  </ListGroup.Item>
+                )}
             </ListGroup>
           </Card>
         </Col>

@@ -39,9 +39,14 @@ const Header = () => {
             <Nav className="ms-auto">
               <LinkContainer to="/cart">
                 <Nav.Link>
-                  <i className="fas fa-shopping-cart"></i> Cart
+                  <i
+                    className="fas fa-shopping-cart"
+                    style={{ paddingRight: "5px" }}
+                  ></i>{" "}
+                  Cart
                 </Nav.Link>
               </LinkContainer>
+
               {userInfo ? (
                 <NavDropdown title={userInfo.name} id="username">
                   <LinkContainer to="/profile">
@@ -56,7 +61,10 @@ const Header = () => {
               ) : (
                 <LinkContainer to="/login">
                   <Nav.Link onClick={handleReset}>
-                    <i className="fas fa-user"></i>
+                    <i
+                      className="fas fa-user"
+                      style={{ paddingRight: "5px" }}
+                    ></i>
                     Sign In
                   </Nav.Link>
                 </LinkContainer>
