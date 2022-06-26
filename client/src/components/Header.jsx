@@ -7,6 +7,7 @@ import { userLogout, userDetails } from "../actions/userActions";
 import { orderMyList } from "../actions/orderActions";
 import { USER_LOGIN_RESET } from "../constants/userConstants";
 import { ORDER_LIST_MY_RESET } from "../constants/orderConstants";
+import { PRODUCT_REVIEW_RESET } from "../constants/productConstants";
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -21,6 +22,10 @@ const Header = () => {
   const handleReset = () => {
     dispatch({ type: USER_LOGIN_RESET });
   };
+
+  const handleReview = () => {
+    dispatch({ type: PRODUCT_REVIEW_RESET });
+  };
   const logoutHandler = () => {
     dispatch(userLogout());
     dispatch({ type: ORDER_LIST_MY_RESET });
@@ -31,7 +36,7 @@ const Header = () => {
       <Navbar bg="dark" variant="dark" expand="lg" collapseOnSelect>
         <Container>
           <LinkContainer to="/">
-            <Navbar.Brand>The Agro</Navbar.Brand>
+            <Navbar.Brand onClick={handleReview}>The Agro</Navbar.Brand>
           </LinkContainer>
 
           <Navbar.Toggle aria-controls="basic-navbar-nav" />

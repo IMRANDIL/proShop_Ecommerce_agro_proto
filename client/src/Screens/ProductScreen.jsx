@@ -41,6 +41,7 @@ const ProductScreen = () => {
       setRating(0);
       dispatch({ type: PRODUCT_REVIEW_RESET });
     }
+
     dispatch(listProductDetails(id));
   }, [dispatch, id, successReview]);
 
