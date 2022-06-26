@@ -49,6 +49,10 @@ const ProductScreen = () => {
     navigation(`/cart/${id}?qty=${qty}`);
   };
 
+  const handleReview = () => {
+    dispatch({ type: PRODUCT_REVIEW_RESET });
+  };
+
   const handleSubmitReview = (e) => {
     e.preventDefault();
     dispatch(
@@ -61,7 +65,7 @@ const ProductScreen = () => {
 
   return (
     <>
-      <Link className="btn btn-light my-3" to="/">
+      <Link className="btn btn-light my-3" to="/" onClick={handleReview}>
         Go Back
       </Link>
 
