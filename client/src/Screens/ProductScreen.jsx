@@ -36,6 +36,7 @@ const ProductScreen = () => {
 
   useEffect(() => {
     if (successReview) {
+      alert("Review Submitted");
       setComnment("");
       setRating(0);
       dispatch({ type: PRODUCT_REVIEW_RESET });
