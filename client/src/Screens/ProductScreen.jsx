@@ -11,12 +11,15 @@ import {
   Form,
 } from "react-bootstrap";
 import Rating from "../components/Rating";
-import { listProductDetails } from "../actions/productActions";
+import { listProductDetails, reviewProduct } from "../actions/productActions";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
+import { PRODUCT_REVIEW_RESET } from "../constants/productConstants";
 
 const ProductScreen = () => {
   const [qty, setQty] = useState(1);
+  const [rating, setRating] = useState(0);
+  const [comment, setComnment] = useState("");
   const navigation = useNavigate();
   const { id } = useParams();
 
@@ -24,6 +27,11 @@ const ProductScreen = () => {
 
   const { error, loading, product } = useSelector(
     (state) => state.productDetails
+  );
+  const { userInfo } = useSelector((state) => state.userLogin);
+
+  const { error: errorReview, success: successReview } = useSelector(
+    (state) => state.productReview
   );
 
   useEffect(() => {
