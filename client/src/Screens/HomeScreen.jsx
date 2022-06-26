@@ -8,15 +8,15 @@ import Message from "../components/Message";
 import { listProducts } from "../actions/productActions";
 
 const HomeScreen = () => {
-  const { keyword } = useParams();
+  const { keyword, pageNumber } = useParams();
 
   const dispatch = useDispatch();
   const { loading, products, error } = useSelector(
     (state) => state.productList
   );
   useEffect(() => {
-    dispatch(listProducts(keyword));
-  }, [dispatch, keyword]);
+    dispatch(listProducts(keyword, pageNumber || 1));
+  }, [dispatch, keyword, pageNumber]);
 
   return (
     <>
