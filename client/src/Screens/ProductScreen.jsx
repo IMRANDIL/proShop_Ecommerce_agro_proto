@@ -173,6 +173,23 @@ const ProductScreen = () => {
                           <option value="5">5 - Excellent</option>
                         </Form.Control>
                       </Form.Group>
+                      <Form.Group controlId="comment">
+                        <Form.Label>Comment</Form.Label>
+                        <Form.Control
+                          as="textarea"
+                          row="3"
+                          value={comment}
+                          onChange={(e) => setComnment(e.target.value)}
+                        ></Form.Control>
+                      </Form.Group>
+                      <Button
+                        type="submit"
+                        variant="primary"
+                        style={{ borderRadius: "5px" }}
+                        className="my-3"
+                      >
+                        Submit
+                      </Button>
                     </Form>
                   ) : (
                     <Message>
