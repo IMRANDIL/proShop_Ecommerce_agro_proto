@@ -50,6 +50,7 @@ const ProductListScreen = () => {
     successDelete,
     createdProduct,
     successCreate,
+    pageNumber,
   ]);
 
   const deleteProductHandler = (id) => {
