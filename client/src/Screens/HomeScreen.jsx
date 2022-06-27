@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { Row, Col } from "react-bootstrap";
 import Product from "../components/Product";
 import Loader from "../components/Loader";
@@ -35,7 +35,13 @@ const HomeScreen = () => {
           content="agro,farm,organic,food,best food,agro products"
         />
       </Helmet>
-      {!keyword && <TopCarousel />}
+      {!keyword ? (
+        <TopCarousel />
+      ) : (
+        <Link to="/" className="btn btn-light">
+          Go Back
+        </Link>
+      )}
       <h1>Latest Products</h1>
       {loading ? (
         <Loader />
