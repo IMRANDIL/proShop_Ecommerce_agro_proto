@@ -17,6 +17,9 @@ import {
   PRODUCT_REVIEW_REQUEST,
   PRODUCT_REVIEW_SUCCESS,
   PRODUCT_REVIEW_FAIL,
+  PRODUCT_TOP_REQUEST,
+  PRODUCT_TOP_SUCCESS,
+  PRODUCT_TOP_FAIL,
 } from "../constants/productConstants";
 import axios from "axios";
 
@@ -168,6 +171,22 @@ export const reviewProduct = (id, productReview) => async (
   } catch (error) {
     dispatch({
       type: PRODUCT_REVIEW_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const topProducts = () => async (dispatch) => {
+  try {
+    dispatch({ type: PRODUCT_TOP_REQUEST });
+    const { data } = await axios.get(`http://localhost:5000/api/products/top`);
+    dispatch({ type: PRODUCT_TOP_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({
+      type: PRODUCT_TOP_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message
