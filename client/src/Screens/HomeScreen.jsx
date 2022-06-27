@@ -6,6 +6,7 @@ import Product from "../components/Product";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
 import { listProducts } from "../actions/productActions";
+import { Helmet } from "react-helmet";
 import Paginate from "../components/Paginate";
 import TopCarousel from "../components/TopCarousel";
 
@@ -22,6 +23,18 @@ const HomeScreen = () => {
 
   return (
     <>
+      <Helmet>
+        <title>Welcome To AgroShop</title>
+        <meta
+          name="description"
+          content="We sell best agro organic products straight from the farm."
+        />
+
+        <meta
+          name="keywords"
+          content="agro,farm,organic,food,best food,agro products"
+        />
+      </Helmet>
       {!keyword && <TopCarousel />}
       <h1>Latest Products</h1>
       {loading ? (
