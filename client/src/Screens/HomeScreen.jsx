@@ -7,6 +7,7 @@ import Loader from "../components/Loader";
 import Message from "../components/Message";
 import { listProducts } from "../actions/productActions";
 import Paginate from "../components/Paginate";
+import TopCarousel from "../components/TopCarousel";
 
 const HomeScreen = () => {
   const { keyword, pageNumber } = useParams();
@@ -21,6 +22,7 @@ const HomeScreen = () => {
 
   return (
     <>
+      {!keyword && <TopCarousel />}
       <h1>Latest Products</h1>
       {loading ? (
         <Loader />
