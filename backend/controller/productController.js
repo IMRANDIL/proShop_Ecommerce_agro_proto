@@ -128,3 +128,11 @@ export const createReview = asyncHandler(async (req, res) => {
     throw new Error("Product not found");
   }
 });
+
+//api/products/top.......public....get..top products..
+
+export const topProducts = asyncHandler(async (req, res) => {
+  const products = await Product.find({}).sort({ rating: -1 }).limit(5);
+
+  res.json(products);
+});
